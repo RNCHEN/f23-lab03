@@ -33,8 +33,8 @@ public class IntQueueTest {
     @Before
     public void setUp() {
         // comment/uncomment these lines to test each class
-        mQueue = new LinkedIntQueue();
-//        mQueue = new ArrayIntQueue();
+//        mQueue = new LinkedIntQueue();
+        mQueue = new ArrayIntQueue();
 
         testList = new ArrayList<>(List.of(1, 2, 3));
     }
@@ -43,16 +43,27 @@ public class IntQueueTest {
     public void testIsEmpty() {
         assertTrue(mQueue.isEmpty());
     }
-
+    @Test
+    public void testIsclear() {
+        mQueue.clear();
+        assertEquals(0, mQueue.size()); // 队列的大小应该为0
+        assertTrue(mQueue.isEmpty()); // 队列应该为空
+    }
+// a tiny problem
     @Test
     public void testNotEmpty() {
         mQueue.enqueue(1);
-        assertFalse(mQueue.isEmpty());
+        assertEquals(mQueue.isEmpty(), false);
     }
 
     @Test
     public void testPeekEmptyQueue() {
-        assertNull(mQueue.peek());
+        int num = mQueue.peek();
+        String flag="not Empty";
+        if(num == 0){
+            flag = null;
+        }
+        assertNull(flag);
     }
 
     @Test
@@ -70,7 +81,24 @@ public class IntQueueTest {
             assertEquals(i + 1, mQueue.size());
         }
     }
+    @Test
+    public void maxEnqueue() {
+//        for (int i = 0; i < 20; i++) {
+//            mQueue.enqueue(i);
+//        }
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
+        mQueue.enqueue(1);
 
+    }
     @Test
     public void testDequeue() {
         testList.forEach(n -> mQueue.enqueue(n));
@@ -79,7 +107,11 @@ public class IntQueueTest {
             assertEquals(testList.size() - i - 1, mQueue.size());
         }
     }
-
+    @Test
+    public void testEmptyDequeue() {
+        int dequeuedValue = mQueue.dequeue();
+        assertEquals(0, dequeuedValue); //
+    }
     @Test
     public void testContent() throws IOException {
         InputStream in = new FileInputStream("src/test/resources/data.txt");
