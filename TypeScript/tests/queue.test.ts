@@ -22,7 +22,11 @@ test("test peek: newly created list should peek null", () => {
 
     expect(createQueue().peek()).toBeNull()
 })
-
+test("test peek: queue with 1 element should peek the one that was most recently added", () => {
+    const queue = createQueue()
+    queue.enqueue(1)
+    expect(queue.peek()).toEqual(1)
+})
 test("test peek: queue with 2 element should peek the one that was most recently added", () => {
     const queue = createQueue()
     queue.enqueue(2)
@@ -30,7 +34,8 @@ test("test peek: queue with 2 element should peek the one that was most recently
     expect(queue.peek()).toEqual(3)
 })
 
-let param = [5, 10, 1000000]
+let param = [-1, 0, 5, 10, 1000000]
+// enqueue 0 is also important 
 // parameterized test, apply to each value of the parameter
 test.each(param)("test enqueue: enqueued number %d is correct", (nr) => {
     const queue = createQueue()
@@ -52,4 +57,37 @@ describe("test size: ", ()=> {
             queue.enqueue(i)
         expect(queue.size()).toBe(11)
     })
+})
+// test clean 
+test("test clean", () => {   // has element 
+    const queue = createQueue()
+    queue.enqueue(5)
+    queue.clear();
+    expect(queue.size()).toBe(0); // size = 0
+    expect(queue.isEmpty()).toBe(true); // point = null 
+})
+test("test clean", () => {// has no element 
+    const queue = createQueue()
+    queue.clear();
+    expect(queue.size()).toBe(0); // size = 0
+    expect(queue.isEmpty()).toBe(true); // point = null 
+})
+// dequeue 
+test("test dequeue", () => {// has no element 
+    const queue = createQueue()
+    expect(queue.size()).toBe(0); // size = 0
+    expect(queue.dequeue()).toBeNull(); // point = null 
+})
+test("test dequeue", () => {// has 1 element 
+    const queue = createQueue()
+    queue.enqueue(5)
+    const cmp = queue.dequeue()
+    expect(cmp).toBe(5); // size = 0
+    expect(queue.isEmpty).toBeTruthy(); // point = null 
+})
+test("test dequeue", () => {// has more than 1 element 
+    const queue = createQueue()
+    queue.enqueue(5)
+    queue.enqueue(3)
+    expect(queue.dequeue()).toBe(3); // point = null 
 })
